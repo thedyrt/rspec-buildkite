@@ -1,4 +1,5 @@
 require "thread"
+require 'open3'
 
 require "rspec/core"
 require "rspec/buildkite/recolorizer"
