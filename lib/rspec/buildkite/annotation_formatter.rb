@@ -27,6 +27,7 @@ module RSpec::Buildkite
     end
 
     def example_failed(notification)
+      puts '***failed***'
       @queue.push(notification) if @queue
     end
 
@@ -34,9 +35,11 @@ module RSpec::Buildkite
 
     def thread
       while notification = @queue.pop
+        puts '---pop---'
         break if notification == :close
 
         if notification
+          puts '---notification---'
           system "buildkite-agent", "annotate",
             "--context", "rspec",
             "--style", "error",
