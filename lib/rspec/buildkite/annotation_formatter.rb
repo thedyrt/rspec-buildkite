@@ -40,14 +40,14 @@ module RSpec::Buildkite
 
         if notification
           puts '---notification---'
-          result = system("buildkite-agent", "annotate",
+          output, result = Open3.capture2e("buildkite-agent", "annotate",
             "--context", "rspec",
             "--style", "error",
             "--append",
             format_failure(notification)
           )
           
-          puts "---fail: #{$?}---" unless result
+          puts "---fail: #{$?}---" unless result.success?
            
         end
       end
