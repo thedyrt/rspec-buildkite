@@ -40,12 +40,15 @@ module RSpec::Buildkite
 
         if notification
           puts '---notification---'
-          system "buildkite-agent", "annotate",
+          result = system("buildkite-agent", "annotate",
             "--context", "rspec",
             "--style", "error",
             "--append",
-            format_failure(notification),
-            out: :close # only display errors
+            format_failure(notification)
+          )
+          
+          puts "---fail: #{$?}---" unless result
+           
         end
       end
     rescue
